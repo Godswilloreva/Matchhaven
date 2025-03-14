@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Match - MatchHaven</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Higher tower text;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #ff4081;
+            text-shadow: 0 0 10px #ff4081;
+            margin-top: 20px;
+        }
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .profile-card {
+            background: rgba(255, 64, 129, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 0 15px #ff4081;
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-card:hover {
+            transform: scale(1.1);
+        }
+        .profile-img {
+            width: 100%;
+            border-radius: 10px;
+            height: 250px;
+            object-fit: cover;
+        }
+        .btn {
+            display: inline-block;
+            background: #ff4081;
+            color: black;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #ff1a70;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+            width: 320px;
+            box-shadow: 0 0 20px #ff4081;
+            text-align: center;
+            position: relative;
+        }
+        .modal img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+        }
+        .payment-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .payment-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💖 Find Your Perfect Match 💖</h1>
+
+    <div class="grid-container">
+        <!-- USA & UK Profiles -->
+        <script>
+            const profiles = [
+                { name: "Jessica", age: 26, country: "USA", img: "51.jpg", bio: "Adventurous & romantic ❤️" },
+                { name: "Emily", age: 30, country: "USA", img: "52.jpg", bio: "Serious relationships only 💕" },
+                { name: "Anna", age: 25, country: "UK", img: "53.jpg", bio: "Passionate and caring ✨" },
+                { name: "Sophia", age: 27, country: "USA", img: "54.jpg", bio: "Looking for a serious partner! 🌹" },
+                { name: "Olivia", age: 28, country: "UK", img: "55.jpg", bio: "Nature lover & dreamer 🌿" },
+                { name: "Rachel", age: 29, country: "USA", img: "56.jpg", bio: "Music enthusiast 🎶" },
+                { name: "Sarah", age: 24, country: "UK", img: "57.jpg", bio: "Travel addict & food lover ✈️" },
+                { name: "Megan", age: 31, country: "USA", img: "58.jpg", bio: "Dog mom & bookworm 📖" },
+                { name: "Hannah", age: 26, country: "UK", img: "9.jpg", bio: "Loves deep conversations 💬" },
+                { name: "Charlotte", age: 27, country: "USA", img: "10.jpg", bio: "Fun-loving & kind-hearted ❤️" },
+                { name: "Lauren", age: 30, country: "UK", img: "11.jpg", bio: "Looking for my soulmate 💞" },
+                { name: "Isabella", age: 23, country: "USA", img: "12.jpg", bio: "Beach lover & artist 🎨" },
+                { name: "Samantha", age: 29, country: "UK", img: "13.jpg", bio: "Romantic at heart 💖" },
+                { name: "Katie", age: 28, country: "USA", img: "14.jpg", bio: "Sweet & caring 🌷" },
+                { name: "Lucy", age: 27, country: "UK", img: "15.jpg", bio: "Looking for real love 💕" },
+                { name: "Chloe", age: 26, country: "USA", img: "16.jpg", bio: "Sunsets & poetry 📜" },
+                { name: "Rebecca", age: 31, country: "UK", img: "18.jpg", bio: "Sassy & confident 💃" },
+                { name: "Ella", age: 25, country: "USA", img: "19.jpg", bio: "Dancing through life 💃" },
+                { name: "Madison", age: 24, country: "UK", img: "20.jpg", bio: "Kind soul & free spirit 🍃" },
+                { name: "Natalie", age: 29, country: "USA", img: "21.jpg", bio: "Love, laughter, and happiness 🌟" }
+            ];
+
+            profiles.forEach((profile, index) => {
+                document.write(`
+                    <div class="profile-card" onclick="openModal('profile${index}')">
+                        <img src="${profile.img}" class="profile-img" alt="${profile.name}">
+                        <h3>${profile.name}, ${profile.age} (${profile.country})</h3>
+                        <p>${profile.bio}</p>
+                        <button class="btn">View Profile</button>
+                    </div>
+                    
+                    <div id="profile${index}" class="modal">
+                        <div class="modal-content">
+                            <span class="close-btn" onclick="closeModal('profile${index}')">&times;</span>
+                            <img src="${profile.img}" alt="${profile.name}">
+                            <h2>${profile.name}, ${profile.age}</h2>
+                            <p>🌟 From: ${profile.country}</p>
+                            <p>💬 "${profile.bio}"</p>
+                            <p>📞 Contact: +1 202-XXX-XXXX</p>
+                            <a href="mailto:matchhaveN.us.uk.com?subject=Interested in ${profile.name}&body=I'm interested in connecting with ${profile.name}." class="payment-btn">Pay $500 Gift Card</a>
+                        </div>
+                    </div>
+                `);
+            });
+        </script>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
